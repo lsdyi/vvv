@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <grandFather></grandFather>
+        {{ me }}
+        dsa{{ a }}dsa
+    </div>
+
+    <script>
+        const child = {
+            template: "<h1>this is child component</h1>",
+            
+        }
+
+        const father = {
+            template: "<h1>this is father component<child></child></h1>",
+            components: {
+                "child": child,
+            }
+
+        }
+
+        const grandfather = {
+            template: "<h1>this is grandfather component<father></father></h1>",
+            components: {
+                "father": father,
+            }
+        }
+
+        var app = new Vue({
+            el: "#app",
+            components: {
+                "grandfather": grandfather,
+            },
+            data: {
+                me: "dasd",
+            },
+            props: ["a"]
+        })
+    </script>
+
+    <div id="app1">
+        <my_component name="杨金哲" birthday-Time="2000-10-18"></my_component>
+    </div>
+
+    <script>
+        const my_component = {
+            props: ["name", "birthdayTime"],
+            template: `<div>我叫{{ name }},我的出生日期是{{ birthdayTime }}</div>`
+        }
+
+        var app1 = new Vue({
+            el: "#app1",
+            components: {
+                my_component: my_component,
+            },
+            
+            // template: `<my_component name="杨金哲" birthdayTime="2000-10-18"></my_component>`
+        })
+    </script>
+
+    <div id="app2">
+        
+    </div>
+
+    <script>
+        const app_component = {
+            props: ["number"],
+            computed: {
+                number_type: function() {
+                    return typeof this.number
+                }
+            },
+            template: `<p>number 的类型是 {{ number_type }}</p>`
+        }
+
+        var app2 = new Vue({ 
+            el: "#app2",
+            components: {
+                app_component: app_component,
+            },
+
+            template: '<app_component :number="3"></app_component>'
+        })
+    </script>
+
+    <div id="app3">
+
+    </div>
+
+    <script>
+        const app3_component = {
+            template: `<input type="button" :value="count" @click="increase"></input>`,
+            
+            data: function() {
+                return {
+                    count: 0,
+                }
+            },
+
+            methods: {
+                increase: function() {
+                    this.count ++
+                    this.$emit("increaseFromSon")
+                }
+            }
+        }
+
+        var app3 = new Vue({
+            el: "#app3",
+            
+            components: {
+                app3_component: app3_component
+            },
+
+            data: {
+                totalCount: 0,
+            },
+
+            methods: {
+                increase: function() {
+                    this.totalCount ++
+                }    
+            },
+
+            template: `<div>
+                            <app3_component @increaseFromSon="increase"></app3_component>
+                            <app3_component @increaseFromSon="increase"></app3_component>
+                            <app3_component @increaseFromSon="increase"></app3_component>
+                            <input type="button" :value="totalCount">
+                        </div>`
+        })
+    </script>
+
+    <div id="app4">
+        
+    </div>
+
+    <script>
+        const app4_component = {
+            template: `<div><slot></slot></div>`
+        }
+
+        var app4 = new Vue({
+            el: "#app4",
+            components: {
+                app4_component: app4_component,
+                
+            },
+
+            template: `<div><p>this is a slot</p><app4_component><h1>hi I'm slot</h1></app4_component></div>`
+        })
+    </script>
+
+    <div id="app5">
+        
+    </div>
+
+    <script>
+        const app5_component = {
+            template: `<div><slot name="a"></slot><slot name="b"></slot><slot name="c"></slot></div>`
+        }
+
+        var app5 = new Vue({
+            el: "#app5",
+            components: {
+                app5_component: app5_component,
+            },
+
+            template: `<div>
+                            <app5_component>
+                                <a href="https://www.baidu.com" slot="c">link to Baidu</a>
+                                <input value="hello world" slot="a" type="text">
+                                <h1 slot="b">this is a heading from Zinger Young </h1>
+                            </app5_component>
+                        </div>`
+        })
+
+        const a_young = {
+            template: `<div><a href='javascript:;' @click="func"><slot></slot></a></div>`,
+
+            props: ["add","ddd"],
+            
+            methods: {
+                func: function() {
+                
+                    // alert("de")
+                    // console.log(this.add)
+                    window.location.href="https://"+app6.$children[0].$slots.default[0].text
+                }
+            }
+        }
+
+        
+    </script>
+
+    <div id="app6">
+
+    </div>
+    <script>
+        var app6 = new Vue({
+            el: "#app6",
+
+            components: {
+                a_young: a_young,
+            },
+
+            template: `<a_young>www.baidu.com</a_young>`
+        })
+    </script>
+
+    <div id="app7">
+        <app7_component count-begin="9"></app7_component>
+    </div>
+    
+    <script>
+        const app7_component = {
+            template: `<div>
+                            <input :value="countBegin">
+                            {{ countBegin }}
+                        </div>`,
+            props: ["countBegin"]
+        }
+
+        var app7 = new Vue({
+            el: "#app7",
+            components: {
+                app7_component: app7_component
+            },
+            // template: `<app7_component countBegin="8"></app7_component>`    
+        })
+    </script>
+</body>
+</html>

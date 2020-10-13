@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <input type="text" name="dasd" id="" value="hello ">
+        <input type="button" value="v-on指令" v-on:click="doIt">
+        <input type="button" value="双击事件" @dblclick="doIt">
+
+        <h1 @click="changeFood">{{ food }}ddd</h1>
+
+        <script>
+            var app = new Vue({
+                el: "#app",
+                methods: {
+                    doIt: function() {
+                        alert("做IT")
+                    },
+                    changeFood: function() {
+						this.food += "好好吃哦加油2333"
+					}
+                },
+                data: {
+                    food: "西兰花炒蛋"
+                } 
+            })
+        </script>
+    </div>
+
+    <div id="counter">
+        <input type="button" value="-" @click="minus">
+        <span v-text=cnt></span>
+        <input type="button" value="+" @click="add">
+        <script>
+            var counter = new Vue({
+                el: "#counter",
+                data: {
+                    cnt: 0,
+                },
+                methods: {
+                    add: function() {
+                        if(this.cnt >= 10) {
+                            alert("不能再加了555")
+                        } else {
+                            this.cnt += 1
+                        }
+                    },
+                    minus: function() {
+                        if(this.cnt <= 0) {
+                            alert("不能再减了2333")
+                        } else {
+                            this.cnt --
+                        }
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div id="showandhide">
+        <input type="button" value="切换显示" v-on:click="changeisShow">
+		<img v-bind:src="imgSrc" v-show="isShow">
+		
+		<script>
+			var showandhide = new Vue({
+				el: "#showandhide",
+				data: {
+					isShow: true,
+                    imgSrc: "./Figure_1.png"
+				},
+				methods: {
+					changeisShow: function() {
+                        this.isShow = !this.isShow
+                    },
+				}
+			
+			})
+		</script>
+    </div>
+    
+    <style>
+        .active{
+            border: 15px solid red
+        }
+    </style>
+    <div id="elementset">
+       
+		<img v-bind:src="imgSrc" v-bind:title="details">
+		<br>
+        <img v-bind:src="imgSrc" v-bind:title="details+'!!!'" :class="isActive?'active':''" @click="changeisActive">
+        <br>
+		<img v-bind:src="imgSrc" v-bind:title="details" :class="{active:isActive}" @click="changeisActive">
+		<script>
+			var elementset = new Vue({
+				el: "#elementset",
+				data: {
+					imgSrc: "./Figure_1.png",
+					details: "有关时间复杂度的图片",
+					isActive: true,
+				},
+				methods: {
+					changeisActive: function() {
+						this.isActive = !this.isActive
+					}
+				}
+				
+			})
+        </script>
+        
+        
+    </div>
+    
+    <div id="vfor">
+        <ul>
+            <li v-for="(item, index) in arr">{{ index+1 }}地址:{{ item }}</li>
+        </ul>
+
+        <input type="button" name="" id="" v-on:click="add" value="增加元素">
+        <input type="button" name="" id="" @click="remove" value="删除元素">
+        <h1 v-for="f in food">{{ f.name }}</h1>
+        <script>
+            var vfor = new Vue({
+                el: "#vfor",
+                data: {
+                    arr: [
+                        "北京",
+                        "上海",
+                        "广州",
+                        "深圳",
+                    ],
+                    food: [
+                        {name: "西兰花炒蛋"},
+                        {name: "蛋炒西兰花"},
+                        {name: "西红柿炒鸡蛋"},
+                    ]
+                },
+                methods: {
+                    add: function() {
+                        this.food.push({name: "另一位美味的菜就是俺也不知道是啥"})
+                    },
+                    remove: function() {
+                        this.food.pop(0)
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div id="fixclickon">
+        <input type="button" name="" id="" value="点击" @click="doIt">
+        <input type="text" name="" id="" :value="greeting" @keyup.enter="sayHi">
+        <script>
+            var fixclickon = new Vue({
+                el: "#fixclickon",
+                methods: {
+                    doIt: function() {
+                        console.log("do It")
+                    },
+                    sayHi: function() {
+                        alert("吃了没？")
+                    }   
+                },
+                data: {
+                    greeting: "hhhhh"
+                }
+            })
+        </script>
+    </div>
+    
+    <div id="inp">
+		<input v-model="message" v-on:keyup.enter="change('杨金哲')">
+		
+		<script>
+			var inp = new Vue({
+				el: "#inp",
+				data: {
+					message: "我要加油的",
+				},
+				methods: {
+					change: function(p) {
+						console.log(this.message+p)
+					}
+				}
+			})
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <img :src="url+'20200901/1.jpg'" alt="">
+    </div>
+    
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                url:""
+            },
+            methods: {
+                
+            },
+            created: 
+                function() {
+                    this.url = "./assets/pics/"
+                }
+            
+        })
+
+
+    </script>
+
+
+
+<div id="vm">
+    {{ message }}
+    <br>
+    {{ reversedMessage }}
+    <br>
+    {{ reverse() }}
+    <input type="button" name="" id="" @click="changeMessage">
+</div>
+
+<script>
+    var vm = new Vue({
+el: "#vm",
+data: {
+    message: "hello world",
+},
+computed: {
+    reversedMessage: function() {
+        // return this.message.split("").reverse().join("")
+        return "Dsadasda"
+    }
+},
+methods: {
+    changeMessage: function() {
+        this.message = "ohmygod"
+    },
+    reverse: function() {
+        return this.message.split("").reverse().join("")
+        // return "Dededae"
+    }
+}
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="notebook">
+        <input type="text" @keyup.enter="add" v-model="message">
+        <h1 v-for="(item, index) in items">{{ index+1 }}. {{ item }}
+            <input type="button" value="清除" @click="remove(index)">
+        </h1>
+        <br>
+        <br>
+        <div v-show="items.length > 0">
+            <span>共{{ total }}项</span>
+            <input type="button" name="" id="" value="清除所有代办事项" @click="clear">
+        </div>
+        <script>
+            var notebook = new Vue({
+                el: "#notebook",
+                data: {
+                    items: [],
+                    message: "请输入待办事项",
+                    total: 0,
+                },
+                methods: {
+                    add: function() {
+                        this.items.push(this.message)
+                        this.total = this.items.length
+                    },
+                    remove: function(index) {
+                        // console.log(index)
+                        // this.items.pop(index-1)
+                        this.items.splice(index, 1)
+                        this.total = this.items.length
+                    },
+                    clear: function() {
+                        this.items.splice(0, this.items.length)
+                        this.total = this.items.length
+                    }
+                }
+            })
+        </script>
+    </div>
+</body>
+</html>

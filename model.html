@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="vue.js"></script>
+    <div id="app">
+        <input :value="value" @input="inputChange">
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: function() {
+                return {
+                    value: ""
+                }
+            },
+            methods: {
+                inputChange(e) {
+                    console.log(e)
+                    console.log(e.target.value)
+                }
+            }
+        })
+    </script>
+
+    <div id="app1">
+        <app1_component 
+        :value="value"
+        @input-change="handleInputChange"
+        ></app1_component>
+    </div>
+
+    <script>
+        const app1_component = {
+            props: ["value"],
+            template: `<div>
+                            <input type="button" value="-" @click="buttonClicked(-1)">
+                            <input type="number" :value="value_computed" @input="inputChange">
+                            <input type="button" value="+" @click="buttonClicked(1)">
+                            <br>
+                            {{ typeof value }}
+                        </div>`,
+
+            computed: {
+                // value_computed: function() {
+                //     return 
+                // }
+            },
+
+            created: function() {
+                this.value_computed = this.value
+            },
+
+            data: function() {
+                return {
+                    value_computed: 0
+                }
+
+            },
+
+            methods: {
+
+                inputChange(e) {
+                    this.value_computed = parseInt(e.target.value)
+                    this.$emit("input-change", "input的值现在变了哦变成了"+this.value_computed)
+                },
+
+                buttonClicked(step) {
+                    this.value_computed = parseInt(this.value_computed)+ step
+                }
+            }
+        }
+
+        var app1 = new Vue({
+            el: "#app1",
+            
+            data: function() {
+                return {
+                    value: 321,
+                }
+            },
+
+            components: {
+                app1_component: app1_component,
+            },
+
+            methods: {
+                handleInputChange(e) {
+                    console.log(e)
+                }
+            }
+        })
+    </script>
+
+    <div id="app2">
+        <app2_component :value="value" @input-change="handleAll" @button-clicked="handleAll"></app2_component>
+    </div>
+    
+    <script>
+        const app2_component = {
+            props: ["value"],
+
+            template: `<div>
+                            <input type="button" value="-" @click="buttonClicked(-1)">
+                            <input :value="value" @input="inputChange">{{ typeof value }}
+                            <input type="button" value="+" @click="buttonClicked(1)">
+                        </div>`,
+            
+            methods: {
+                buttonClicked(step) {
+                    console.log("das")
+                    this.$emit("button-clicked", this.value+step)
+                },
+
+                inputChange(e) {
+                    this.$emit("input-change", parseInt(e.target.value))
+                }
+                
+                
+            }
+
+        }
+
+        var app2 = new Vue({
+            el: "#app2",
+
+            data: function() {
+                return {
+                    value: 312321
+                }
+            },
+
+            methods: {
+                handleAll(e) {
+                    this.value = e
+                }
+            },
+
+            components: {
+                app2_component: app2_component
+            }
+        })
+    </script>
+
+    <div id="app3">
+        <app3_component  v-model="value_pass" @input="handleInput"></app3_component>
+        <app3_component2></app3_component2>
+    </div>
+
+    <script>
+        const app3_component = {
+            template: `<div>
+                            <input type="button" value="-" @click="buttonCliked(-1)">
+                            <input type="text" :value="value" @input="inputChanged"> {{ typeof value }}
+                            <input type="button" value="+" @click="buttonCliked(1)">
+                        </div>`,
+            props: ["value"],
+            
+            methods: {
+                buttonCliked(step) {
+                    this.$emit("input", this.value+step)
+                },
+
+                inputChanged(e) {
+                    console.log(e)
+                    this.$emit("input", e.target.value-0)
+                }
+            }
+            
+        }
+
+        const app3_component2 = {
+            template: `<input v-model="value">`,
+
+            data: function() {
+                return {
+                    value: 1312
+                }
+            },
+
+            methods: {
+                inputChanged(e) {
+                    console.log(e)
+                    this.value = e.target.value
+
+                }
+            }
+        }
+        var app3 = new Vue({
+            el: "#app3",
+            
+            components: {
+                app3_component2: app3_component2,
+                app3_component: app3_component
+            },
+
+            data: function() {
+                return {
+                    value_pass: 3,
+                }
+            },
+
+            methods: {
+                handleInput(e){
+                    this.value_pass = e+10
+                    // console.log(e.target.value)
+                }
+            }
+            
+        })
+    </script>
+    <diV>
+        dsadsadas
+    </diV>
+
+    <div id="app4">
+        <app4_component birth-place="湖北荆州松滋市"></app4_component>
+    </div>
+
+    <script>
+        const app4_component = {
+            props: ["birthPlace"],
+            
+            template: `<div>
+                            我出生在{{ birthPlace }}
+                        </div>`
+        }
+
+        var app4 = new Vue({
+            el: "#app4",
+            
+            components: {
+                app4_component: app4_component
+            }
+        
+        })
+    </script>
+</body>
+</html> 

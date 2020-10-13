@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>播放器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <input type="text" name="" id="" v-model="search" @keyup.enter="searchMusic">
+        <input type="button" value="点击搜索" @click="searchMusic" name="" id="">
+        <ul v-show="songs.length > 0">
+            <audio :src="musicUrl" controls></audio>
+            <li v-for="song in songs">
+                <b>{{ song.name }}</b>
+                <span v-for="artist in song.artists">{{ artist.name }}&nbsp;&nbsp;</span>
+                <input type="button" value="播放" @click="playMusic(song.id)" name="" id="">
+            </li>
+        </ul>
+        <input type="button" @click="kkk" name="" id="">
+    </div>
+   <script>
+       var app = new Vue({
+        el: "#app",
+        data: {
+            search: "",
+            songs: [],
+            musicUrl: ""
+        },
+        methods: {
+            searchMusic: function() {
+                // console.log(this.search)
+                var that = this
+                axios.get("https://autumnfish.cn/search?keywords="+this.search)
+                .then(function(response) {
+                    console.log(response)
+                    that.songs = response.data.result.songs
+                }, function(error) {
+                    console.log(error)
+                })
+            },
+            playMusic: function(musicId) {
+                
+                var that = this
+                axios.get("https://autumnfish.cn/song/url?id="+musicId)
+                .then(function(response) {
+                    console.log(response)
+                    that.musicUrl = response.data.data[0].url
+
+                }, function(error) {
+                    console.log(error)
+                })
+                
+                
+            },
+            kkk: function() {
+                axios.get("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?w=%E9%99%88%E5%A5%95%E8%BF%85")
+                .then(function(response) {
+                    console.log(response)
+                }, function(error) {
+                    console.log(error)
+                })
+            }
+        }
+    })
+   </script>
+</body>
+</html>

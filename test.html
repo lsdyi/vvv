@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="city" name="" id="">    
+        <a  v-for="item in cities">{{ item }}</a>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:{
+                city: "西安",
+                cities: [
+                    "北京",
+                    "上海",
+                    "广州",
+                    "深圳",
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

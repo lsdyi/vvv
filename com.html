@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <button-counter></button-counter>
+        <button-counter2></button-counter2>
+    </div>
+
+    <script>
+        
+        Vue.component("button-counter", {
+            data: function() {
+                return {
+                    count: 0,
+                }
+            },
+            template: `<button @click='count++' :id="'s'+count">you clicked me {{ count }} times.</button>`
+        })
+
+        Vue.component("button-counter2", {
+            data: function() {
+                return {
+                    count: 0,
+                }
+            },
+            template: `<button @click='count++' :id="'s'+count">you clicked me {{ count }} times.</button>`
+        })
+
+        var app = new Vue({
+            el: "#app",
+        })
+    </script>
+
+    <div id="app1">
+        <div  >
+            <test :style="{fontSize: postFontSize+'em'}" v-for="item in items" :key="item.id" :post="item" ></test>
+        </div>
+    </div>
+
+    <script>
+        Vue.component("test", {
+            props: ["post"],
+            data: function() {
+                return {
+                    fs: 3,
+                }
+            },
+            template: `
+                <div  :style="'font-size:'+fs+'em'">
+                    <h1>{{ post.title }}</h1>
+                    <span>{{ post.content }}</span>
+                    <input type="button" value="放大字号" @click="fun1">
+                    
+                </div>
+            `,
+            methods: {
+                fun: function() {
+                    console.log(1)
+                },
+                fun1: function() {
+                    console.log("dasd")
+                    console.log(this.fs++)
+                }
+            }
+            
+        })
+
+        var app1 = new Vue({
+            el: "#app1",
+
+            data: {
+                items: [
+                    {
+                        key: 1,
+                        title: "Zinger Young",
+                        content: "fighting",
+                    },
+                    {
+                        key: 2,
+                        title: "hello world",
+                        content: "cout<<\'hello world\'",
+                    },
+                    {
+                        key:3,
+                        title: "Vue",
+                        content: "hello Vue",
+                    }
+                ],
+                postFontSize: 1,
+            },
+            
+            methods: {
+
+            },
+        })
+    </script>
+
+    <div id="app2">
+        <input :value="inputValue" @input="inputValue=$event.target.value">
+        {{ inputValue }}
+
+    </div>
+
+    <script>
+        var app2 = new Vue({
+            el: "#app2",
+            data: function() {
+                return {
+                    inputValue: "请输入",
+                }
+            }
+        })
+    </script>
+
+    <div id="app3">
+        <component-b></component-b>
+        <componenta></componenta>
+        <button-counter></button-counter>
+        <aa-a></aa-a>
+    </div>
+
+    <script>
+        Vue.component('aa-a', {
+            data: function() {
+                return {
+                    count: 0,
+                }
+            },
+            template: `<input type="text"></input>`
+        })
+
+        var componentB = {
+            template: `<button>hello world</button>`
+        }
+        
+        var app3 = new Vue({
+            el: "#app3",
+            components: {
+                componentB: componentB,
+            }
+        })
+
+        
+        
+        // Vue.component("componenta", {
+        //     template: `<button>Zinger Young</button>`,
+        //     data: {}
+        // })
+
+        Vue.component("componenta", {
+            template: "<button>Zinger Young</button>"
+        })
+
+        // Vue.component("a-aa", {
+        //     template: `<input type="text"></input>`
+        // })
+
+        
+    </script>
+
+    <div id="app4">
+        <com4 :p1="'dass'" :p2="31"></com4>
+    </div>
+
+    <script>
+        var com4 = {
+            props: {
+                p1: {
+                    type: String,
+                    required: true,
+                },
+                p2: {
+                    type: Number,
+                    required: true,
+                }
+            },
+            template: '<h1>{{ p1 }}+{{ p2 }}</h1>',
+            
+            computed: {
+                c: function() {
+                    return p1+"dsadas"
+                }
+            }
+        }
+
+        var app4 = new Vue({
+            el: "#app4",
+            components: {
+                com4: com4,
+            }
+        })
+    </script>
+</body>
+</html>

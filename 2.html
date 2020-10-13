@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="changepic">
+        <input type="button" value="<" @click="prev" v-show="left" style="height: 500px;width: 500px;">
+        <img :src="'./'+pics[index]" style="height: 1000px;width: 1000px;">
+        <input type="button" value=">" @click="next" v-show="right" style="height: 500px;width: 500px;">
+
+        <script>
+            var changepic = new Vue({
+                el: "#changepic",
+                data: {
+                    index: 0,
+                    pics: [
+                        "1.jpg",
+                        "2.png",
+                        "3.png",
+                        "4.jpg",
+                        "5.jpg",
+                        "6.jpg",
+                        "7.jpg",
+                    ],
+                    left: false,
+                    right: true,
+                },
+                methods: {
+                    prev: function() {
+                        if(this.index > 0){
+                            this.left = true
+                            this.index --
+                        }
+
+                        if(this.index > 0 && this.index < this.pics.length-1) {
+                            this.right = true
+                            this.left  = true
+                        } else if(this.index == 0) {
+                            this.left = false
+                        } else if(this.index ==  this.pics.length-1) {
+                            this.right = false
+                        }
+
+                        
+                    },
+                    next: function() {
+                        if(this.index < this.pics.length-1) {
+                            this.right = true
+                            this.index ++
+                        }
+
+                        if(this.index > 0 && this.index < this.pics.length-1) {
+                            this.right = true
+                            this.left  = true
+                        } else if(this.index == 0) {
+                            this.left = false
+                        } else if(this.index ==  this.pics.length-1) {
+                            this.right = false
+                        }
+
+                         
+                    }
+                }
+            })
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app1">
+        <ul>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li> 
+        </ul>
+    
+    <script>
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                todos: [
+                    {"text": "hello world"},
+                    {"text": "hello world1"},
+                    {"text": "hello world2"},
+                    {"text": "hello world3"},
+                    
+                ],
+            },
+        }) 
+    </script>
+    </div>
+
+    <div id="app2">
+        <span>
+            {{ value }}
+        </span>
+        <input type="text" v-model="value"name="" id="" v-bind:title="infor">
+
+        <script>
+            var app2 = new Vue({
+                el: "#app2",
+                data: {
+                    value: "",
+                    infor: "这是一个输入框",
+                }
+            })
+        </script>
+    </div>
+
+    <div id="app3">
+        <!-- {{ func1() }} -->
+        {{ res }}<br>
+        {{ res }}<br>
+        {{ res }}<br>
+        
+        {{ res1() }}<br>
+        {{ res1() }}<br>
+        {{ res1() }}<br>
+        <script>
+            var app3 = new Vue({
+                el: "#app3",
+                data: {
+                    fake:21,
+                },
+                computed: {
+                    res: function() {
+                        console.log(this.fake)
+                        return this.fake+Math.random()
+                    }
+                },
+                methods: {
+                    func1: function() {
+                        alert("this is a fun")
+                        return "hello world"
+                    },
+
+                    res1: function() {
+                        return Math.random()
+                    }
+                },
+                
+            })
+        </script>
+    </div>
+
+    <div id="app">
+        {{ firstname }}
+        {{ lastname }}<br>
+        {{ fullname }}
+        <script>
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    firstname: "Zinger",
+                    lastname: "Young",
+                },
+                
+                computed: {
+                    fullname: {
+                        get: function() {
+                            return this.firstname+" "+this.lastname
+                        },
+                        
+                        set: function(value) {
+                            var temp = value.split(" ")
+                            this.firstname = temp[0]
+                            this.lastname = temp[temp.length-1]
+                        }
+                    
+                    }
+                }
+                    
+            })
+        </script>
+    </div>
+
+    <div id="app4">
+        <div :class="{active: isActive, positive: isPositive(), comp: isComputed}">
+            
+        </div>
+        
+        <script>
+            var app4 = new Vue({
+                el: "#app4",
+                data: {
+                    isActive: true,
+                },
+                
+                computed: {
+                    isComputed: function() {
+                        return this.isActive && this.isPositive()
+                    }
+                },
+                
+                methods: {
+                    isPositive: function() {
+                        return true
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div id="app5">
+        <div :id="[data1, data2]">
+        
+        </div>
+  
+        <script>
+            var app5 = new Vue({
+                el: "#app5",
+                data: {
+                    data1: "d1",
+                    data2: "d2",
+                }
+            })
+        </script>
+    </div>
+
+    <div id="app6">
+        <div style="color:red">sads</div>
+    </div>
+
+    <div id="app7">
+        <template v-if="choice == 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">ddsadsds
+        </template>
+        <template v-if="choice2=='email'">
+            Email
+            <input placeholder="Enter your email">
+            dsad
+        </template>
+
+        <template v-if="choice == 'email'">
+            Email
+            <input placeholder="Enter your email">
+            dsad
+        </template>
+    </div>
+
+    <script>
+        var app7 = new Vue({
+            el: "#app7",
+            data: {
+                choice: "username",
+                choice2:"de",
+                choice3:true,
+            }
+        })
+    </script>
+
+    <div id="app8">
+        <input type="text" placeholder="enter your number" v-if="choice">
+        <input type="text" placeholder="enter your kkk" v-if="choice2">
+        
+    </div>
+
+    <script>
+        var app8 = new Vue({
+            el: "#app8",
+            data: {
+                choice: true,
+                choice2: false,
+            }
+        })
+    </script>
+</body>
+</html>

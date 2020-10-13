@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="weather">
+        <input type="text" v-model="city" name="" id="" @keyup.enter="showWeather">
+        <input type="button" value="搜索" name="" id="" @click="showWeather">
+        <div>
+            <br>
+            <span>热门城市：</span>
+            <a href="javascript:;" v-for="hot in hots" style="text-decoration-line: none;" v-on:click="hotcity(hot)">{{ hot }}&nbsp;&nbsp;&nbsp;</a>
+        </div>
+        <ul v-for="item in messages">
+            <h2 v-show="messages.length">{{ item.city }}天气</h2>
+            <input type="button" value="删除" @click="remove(item)">
+
+            <li v-for="message in item.array">{{ message.date }}&nbsp;{{ message.high }}&nbsp;{{ message.low }}&nbsp;{{ message.type }}</li>
+        </ul>
+    </div>
+    
+    <script>
+        var weather = new Vue({
+            el: "#weather",
+            data: {
+                messages: [],
+                city: "武汉",
+                hots: [
+                    "西安",
+                    "北京",
+                    "上海",
+                    "广州",
+                    "深圳",
+                ]
+            },
+            methods: {
+                showWeather: function() {
+                    var that = this
+                    axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city)
+                    .then(function (response) {
+                        // console.log(response)
+                        // console.log(response.data.data.yesterday)
+
+                        for(var i = 0; i < that.messages.length; i++) {
+                            if(that.messages[i].city == response.data.data.city) return 
+                        }
+                        var array = []
+                        array.push(response.data.data.yesterday)
+                        for(var i = 0; i < response.data.data.forecast.length; i++) {
+                            array.push(response.data.data.forecast[i])
+                        }
+                        that.messages.push({
+                            array: array,
+                            city: response.data.data.city,
+                        })
+                    }, function (error) {
+                        console.log(error)
+                    })
+                    // console.log(this.city)
+                },
+                hotcity: function(hot) {
+                    this.city = hot
+                    console.log("dea")
+                    this.showWeather()
+                },
+                remove: function(item) {
+                    console.log(item)
+                    console.log("dsads")
+                    console.log(this.messages)
+                    var i
+                    for(i = 0; i < this.messages.length; i++) {
+                        if(item == this.messages[i]) break
+                    }
+                    console.log(this.messages[i])
+                    console.log(i)
+                    
+                    this.city = null
+                    this.messages.splice(i,1)
+                    // for(; i < length; i++) {
+                    //     this.messages[i] = this.messages[i+1]
+                    // }
+                    // this.messages[this.messages.length-1] = null
+                    // if(this.messages.length == 0) {
+                        
+                    // }
+                    console.log(this.messages)
+                    this.showWeather()
+                }
+            }
+        })
+
+        document.querySelector("body").onload = function() {
+            weather.showWeather()
+        }
+    </script>
+
+    
+</body>
+</html>

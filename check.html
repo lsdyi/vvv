@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div :id="[a,b]"></div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                array: [
+                    "e1",
+                    "e2"
+                ],
+                a:"dedea",
+                b:"bbbb"
+            }
+        })
+    </script>
+
+    <div id="app1">
+        <ul>
+            <li v-for="pro,keyname,index2 in object">
+                {{ index2+1 }} {{ keyname }}: {{ pro }} {{pro.id}}
+            </li>
+        </ul>
+        array:<br>
+        <ul>
+            <li v-for="item,index in array">
+                {{ index+1 }}: {{ item }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                object: {
+                    d1:"123",
+                    d2:"hello world",
+                    d3:"Zinger Young"
+                },
+                array: [
+                    "e1",
+                    "e2",
+                    "e3",
+                    "e4",
+                    "e5",
+                ]
+            }
+        })
+
+
+    </script>
+
+    <div id="app2">
+        {{ numbers }}
+        <ul>
+            <li v-for="item in even">
+                {{ item }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var app2 = new Vue({
+            el: "#app2",
+            data: {
+                numbers: [1,2,3,4,5,6,7,8,9,10],
+            },
+            computed: {
+                even: function() {
+                    return this.numbers.filter(function(number) {
+                        if(number%2 == 0) {
+                            return true
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+
+    <div id="app3">
+        <input type="button" @click.self.prevent="greet">
+    </div>
+
+    <script>
+        var app3 = new Vue({
+            el: "#app3",
+            methods: {
+                greet: function(eventsss) {
+                    console.log(eventsss)
+                    console.log(eventsss.target.tagName)
+                }
+            }
+        })
+    </script>
+    ss
+    <p>as</p>
+    <br><br>
+    fsd
+    <input type="textarea">
+</body>
+</html>
